@@ -1,2 +1,2 @@
 # Mysensors-RainSensor
-For Mysensor Rain UV and Light sensor
+For Mysensors Rain, UV and Light sensor
