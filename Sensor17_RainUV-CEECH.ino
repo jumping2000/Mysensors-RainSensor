@@ -1,12 +1,12 @@
  /**
  *     PROJECT: MySensors / Small battery sensor low power 8 mhz
  *     PROGRAMMER: Jumping
- *     DATE: october 10, 2016/ last update: october 10, 2016
- *     FILE: WeatherStation_CEECH.ino
+ *     DATE: october 17, 2016/ last update: october 16, 2017
+ *     FILE: Sensor17_RainUV-CEECH.ino
  *     LICENSE: Public domain
  *    
  *     Hardware: ATMega328p board w/ NRF24l01
- *        and MySensors 2.0
+ *        and MySensors 2.1
  *            
  *    Special:
  *        program with Arduino Pro 3.3V 8Mhz!!!
@@ -121,19 +121,18 @@ eps track of accumulated rainfall
   boolean reedState;                              // Current state the reedswitch is in
   boolean oldReedState;                           // Old state (last state) of the reedswitch
   unsigned long lastSend =0;                      // Time we last tried to fetch counter.
-//-------------------------------------------------------------------
-BH1750 lightSensor;                                         // lux meter
-//-------------------------------------------------------------------
-MyMessage luxMsg(LIGHT_CHILD_ID, V_LEVEL);                  // BH 1750 Light sensor (lux)
-MyMessage uvMsg(UV_CHILD_ID, V_UV);                         // ML8511 UV Sensor
-MyMessage rainMsg(RAIN_CHILD_ID, V_RAIN);                   // Bucket sensor
-MyMessage lastCounterMsg(RAIN_CHILD_ID,V_VAR1);
-//--------------------------------------------------------------------------------
-MyMessage batteryVoltageMsg(BATT_CHILD_ID, V_VOLTAGE);      // Battery voltage (V)
-MyMessage batteryCurrentMsg(BATT_CHILD_ID, V_CURRENT);      // Battery current (mA)
-//--------------------------------------------------------------------------------
-void setup()  
-{ 
+  //-------------------------------------------------------------------
+  BH1750 lightSensor;                                         // lux meter
+  //-------------------------------------------------------------------
+  MyMessage luxMsg(LIGHT_CHILD_ID, V_LEVEL);                  // BH 1750 Light sensor (lux)
+  MyMessage uvMsg(UV_CHILD_ID, V_UV);                         // ML8511 UV Sensor
+  MyMessage rainMsg(RAIN_CHILD_ID, V_RAIN);                   // Bucket sensor
+  MyMessage lastCounterMsg(RAIN_CHILD_ID,V_VAR1);
+  //--------------------------------------------------------------------------------
+  MyMessage batteryVoltageMsg(BATT_CHILD_ID, V_VOLTAGE);      // Battery voltage (V)
+  MyMessage batteryCurrentMsg(BATT_CHILD_ID, V_CURRENT);      // Battery current (mA)
+  //--------------------------------------------------------------------------------
+void setup() { 
   Serial.begin(9600);
   Wire.begin();             // START I2C
   lightSensor.begin();      // LIGHT SENSOR
@@ -162,8 +161,7 @@ void presentation()  {
   present(RAIN_CHILD_ID, S_RAIN, "Rain " NODE_TXT);         // RAIN Sensor
 }
 //-------------------------------------------------------------------
-void loop()      
-{
+void loop() {
   unsigned long currentTime = millis();
   //See if we have the counter/pulse from Domoticz - and ask for it if we dont.
   if (!pcReceived && (currentTime - lastSend > 5000)) {      
